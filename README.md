@@ -1,4 +1,5 @@
-Romanian version:[README.ro.md](README.ro.md)
+Romanian version: [link](README.ro.md)
+
 ---
 
 # Record Label Management System
