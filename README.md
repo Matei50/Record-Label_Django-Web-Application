@@ -1,4 +1,4 @@
-Romanian version available: [README.ro.md](README.ro.md)
+Romanian version available: [README.ro.md] (README.ro.md)
 
 ---
 
