@@ -1,4 +1,4 @@
-English version available: [README.md] (README.md)
+English version: [link](README.ro.md)
 
 ---
 
