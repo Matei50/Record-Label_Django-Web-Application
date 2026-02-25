@@ -1,5 +1,4 @@
-Romanian version available: [README.ro.md] (README.ro.md)
-
+Romanian version available: 🇷🇴 [Read in Romanian](README.ro.md)
 ---
 
 # Record Label Management System
