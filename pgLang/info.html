@@ -1,0 +1,18 @@
+{% extends "pgLang/baza.html" %}
+
+{% block title %}Pagina de Informații{% endblock %}
+
+{% block content %}
+    <h1>Informații despre server</h1>
+    <p>Data (formatată): {{ rezultat }}</p>
+
+    <h2>Parametrii din URL</h2>
+    <p>Număr de parametrii: {{ numar_parametrii }}</p>
+    
+    <p>Numele parametrilor:</p>
+    <ul>
+        {% for nume in nume_parametrii %}
+            <li>{{ nume }}</li>
+        {% endfor %}
+    </ul>
+{% endblock %}
