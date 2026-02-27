@@ -1,0 +1,91 @@
+{% extends "pgLang/baza.html" %}
+
+{% block title %}
+Gen: {{ gen.nume }}
+{% endblock %}
+
+{% block content %}
+    <h1 style="border-bottom: 3px solid {{ gen.culoare }};">{{ gen.nume }}</h1>
+    <p>{{ gen.descriere }}</p>
+
+    {% if warning_message %}
+        <p style="color: orange; font-weight: bold;">{{ warning_message }}</p>
+    {% endif %}
+    
+    <hr>
+    <h2>Filtreaza Artistii din acest Gen:</h2>
+
+    <form method="GET" action="">
+        <div class="filter-form">
+            {% if form.non_field_errors %}
+                <div class="form-error">{{ form.non_field_errors }}</div>
+            {% endif %}
+            
+            {% for field in form %}
+                {% if field.name == 'gen_muzical' %}
+                    <input type="hidden" name="{{ field.name }}" value="{{ field.value|default_if_none:'' }}">
+                {% else %}
+                    <div class="form-group">
+                        {{ field.label_tag }}
+                        {{ field }}
+                        {% if field.errors %}<div class="form-error">{{ field.errors }}</div>{% endif %}
+                    </div>
+                {% endif %}
+            {% endfor %}
+        </div>
+        <button type="submit" class="button-primary">Filtreaza</button>
+        <a href="{% url 'detaliu-gen' gen.slug %}" 
+            class="button-secondary" 
+            onclick="return confirm('Sunteti sigur ca vreti sa resetati filtrele?');">
+            Reseteaza
+        </a>
+    </form>
+    
+    <div class="sorting-links">
+    Sorteaza dupa nume:
+    {% with all_params=request.GET.urlencode %}
+        {% if sort_display == 'A-Z' %}
+            <strong>A-Z</strong>
+        {% else %}
+            <a href="?sort=a&{{ all_params|cut:'sort=d'|cut:'page=' }}">A-Z</a>
+        {% endif %}
+        |
+        {% if sort_display == 'Z-A' %}
+            <strong>Z-A</strong>
+        {% else %}
+            <a href="?sort=d&{{ all_params|cut:'sort=a'|cut:'page=' }}">Z-A</a>
+        {% endif %}
+    {% endwith %}
+    </div>
+
+    <ul class="artist-list">
+        {% for artist in artisti %} <li>
+                <h3><a href="{% url 'detaliu-artist' artist.id %}">{{ artist.nume }}</a></h3>
+                <p>{{ artist.bio|truncatewords:30 }}</p> 
+                {% if artist.imagine %}
+                    <img src="{{ artist.imagine.url }}" alt="{{ artist.nume }}" class="artist-list-img">
+                {% endif %}
+            </li> 
+        {% empty %}
+            <li>Nu s-au gasit artisti care sa corespunda filtrelor.</li>
+        {% endfor %}
+    </ul>
+    
+    <div class="pagination">
+        <span class="step-links">
+        {% with all_params=request.GET.urlencode %}
+            <span class="current">
+                Pagina {{ artisti.number }} din {{ artisti.paginator.num_pages }}.
+            </span>
+            {% if artisti.has_previous %}
+                <a href="?page=1&{{ all_params|cut:'page=' }}">&laquo; prima</a>
+                <a href="?page={{ artisti.previous_page_number }}&{{ all_params|cut:'page=' }}">inapoi</a>
+            {% endif %}
+            {% if artisti.has_next %}
+                <a href="?page={{ artisti.next_page_number }}&{{ all_params|cut:'page=' }}">inainte</a>
+                <a href="?page={{ artisti.paginator.num_pages }}&{{ all_params|cut:'page=' }}">ultima &raquo;</a>
+            {% endif %}
+        {% endwith %}
+        </span>
+    </div>
+{% endblock %}

@@ -1,0 +1,29 @@
+{% extends "pgLang/baza.html" %}
+
+{% block title %}
+Adauga un Artist Nou
+{% endblock %}
+
+{% block content %}
+    <h1>Adauga un Artist Nou</h1>
+
+    <form method="POST" enctype="multipart/form-data">
+        {% csrf_token %}
+        
+        {% for field in form %}
+            <div class="form-group">
+                {{ field.label_tag }}
+                
+                {{ field }}
+                
+                {% if field.errors %}
+                    <div class="form-error">
+                        {{ field.errors }}
+                    </div>
+                {% endif %}
+            </div>
+        {% endfor %}
+        
+        <button type="submit" class="button-primary">Salveaza Artist</button>
+    </form>
+{% endblock %}

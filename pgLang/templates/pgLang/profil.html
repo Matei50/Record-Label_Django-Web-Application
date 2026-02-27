@@ -1,0 +1,19 @@
+{% extends "pgLang/baza.html" %}
+{% block content %}
+  <h1>Profil</h1>
+
+  <ul>
+    <li><b>Username:</b> {{ profil.username }}</li>
+    <li><b>Email:</b> {{ profil.email }}</li>
+    <li><b>Prenume:</b> {{ profil.first_name }}</li>
+    <li><b>Nume:</b> {{ profil.last_name }}</li>
+    <li><b>Data nasterii:</b> {{ profil.data_nasterii }}</li>
+    <li><b>Telefon:</b> {{ profil.telefon }}</li>
+    <li><b>Adresa:</b> {{ profil.adresa }}</li>
+    <li><b>Oras:</b> {{ profil.oras }}</li>
+    <li><b>Judet:</b> {{ profil.judet }}</li>
+    <li><b>Cod postal:</b> {{ profil.cod_postal }}</li>
+  </ul>
+
+  <a href="{% url 'schimbare-parola' %}">Schimba parola</a>
+{% endblock %}

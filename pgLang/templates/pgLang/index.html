@@ -1,0 +1,34 @@
+{% extends "pgLang/baza.html" %}
+
+{% block content %}
+
+    <div class="stats-box">
+        <h2>Stats:</h2>
+        <ul>
+            <li><strong>{{ numar_artisti }}</strong> artisti</li>
+            <li><strong>{{ numar_albume }}</strong> albume</li>
+            <li><strong>{{ numar_piese }}</strong> piese</li>
+        </ul>
+    </div>
+    <h1>Welcome to pgLang</h1>
+    <p>
+        Feel free to explore the act of creativity and get inspired.
+    </p>
+    <br></br>
+    <br></br>
+    <br></br>
+    <br></br>
+    <br></br>
+    <h4>Take a closer look at our genres.</h4>
+    
+    <div class="genre-container">
+        {% for gen in genuri %}
+            <a href="{% url 'detaliu-gen' gen.slug %}" class="genre-card">
+                <h3>{{ gen.nume }}</h3>
+            </a>
+        {% empty %}
+            <p>Nu au fost adaugate genuri muzicale.</p>
+        {% endfor %}
+    </div>
+
+{% endblock %}

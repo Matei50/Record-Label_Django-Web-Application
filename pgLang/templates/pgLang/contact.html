@@ -1,0 +1,42 @@
+{% extends "pgLang/baza.html" %}
+
+{% block title %}
+Contact
+{% endblock %}
+
+{% block content %}
+    <h1>Contacteaza-ne</h1>
+    <p>Ai o intrebare? Foloseste formularul de mai jos.</p>
+    <hr>
+    
+    <form method="POST">
+        {% csrf_token %}
+        
+        {% if form.non_field_errors %}
+            <div class="form-error">
+                {{ form.non_field_errors }}
+            </div>
+        {% endif %}
+
+        {% for field in form %}
+            <div class="form-group">
+                {{ field.label_tag }}
+                {{ field }}
+                
+                {% if field.help_text %}
+                    <small style="color: #ccc; font-size: 0.8em;">{{ field.help_text }}</small>
+                {% endif %}
+                
+                {% if field.errors %}
+                    <div class="form-error">
+                        {{ field.errors }}
+                    </div>
+                {% endif %}
+            </div>
+        {% endfor %}
+        
+        <div class="form-buttons">
+            <button type="submit" class="button-primary">Trimite Mesajul</button>
+        </div>
+    </form>
+{% endblock %}

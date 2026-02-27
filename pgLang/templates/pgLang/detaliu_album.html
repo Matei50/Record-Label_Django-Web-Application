@@ -1,0 +1,52 @@
+{% extends "pgLang/baza.html" %}
+
+{% block title %}
+Album: {{ album.titlu }}
+{% endblock %}
+
+{% block content %}
+    <div style="display: flex; gap: 40px; align-items: flex-start; margin-top: 20px;">
+        
+        <div style="flex: 1; max-width: 400px;">
+            {% if album.coperta %}
+                <img src="{{ album.coperta.url }}" alt="{{ album.titlu }}" 
+                     style="width: 100%; border-radius: 12px; box-shadow: 0 10px 30px rgba(0,0,0,0.5);">
+            {% else %}
+                <div style="width: 100%; height: 400px; background-color: #333; border-radius: 12px; display: flex; align-items: center; justify-content: center; color: #666;">
+                    Fara Coperta
+                </div>
+            {% endif %}
+        </div>
+
+        <div style="flex: 2;">
+            <h4 style="color: #61dafb; margin-bottom: 5px;">ALBUM</h4>
+            <h1 style="font-size: 3em; margin-top: 0; line-height: 1.1;">{{ album.titlu }}</h1>
+            
+            <p style="color: #ccc; font-size: 1.1em;">
+                De <a href="{% url 'detaliu-artist' album.artist.id %}" style="font-weight: bold;">{{ album.artist.nume }}</a>
+                • {{ album.data_lansarii|date:"Y" }}
+                {% if album.gen %} • {{ album.gen }} {% endif %}
+                • {{ album.piese.count }} piese
+            </p>
+
+            <hr style="margin: 30px 0;">
+
+            <h3>Tracklist</h3>
+            <ul class="artist-list" style="margin-top: 20px;">
+                {% for piesa in album.piese.all %}
+                    <li style="display: flex; justify-content: space-between; align-items: center; padding: 15px 10px;">
+                        <div>
+                            <span style="color: #999; margin-right: 15px;">{{ piesa.numar_piesa }}.</span>
+                            <strong>{{ piesa.titlu }}</strong>
+                        </div>
+                        <div style="color: #ccc;">
+                            {{ piesa.durata_formatata }}
+                        </div>
+                    </li>
+                {% empty %}
+                    <li>Nu au fost adăugate piese pentru acest album.</li>
+                {% endfor %}
+            </ul>
+        </div>
+    </div>
+{% endblock %}

@@ -1,0 +1,43 @@
+{% extends "pgLang/baza.html" %}
+
+{% block title %}
+Login
+{% endblock %}
+
+{% block content %}
+    <h1>Autentificare</h1>
+    <p>Te rugăm să introduci datele de autentificare.</p>
+    <hr>
+    
+    <form method="POST">
+        {% csrf_token %}
+        
+        {% if form.non_field_errors %}
+            <div class="form-error">
+                {{ form.non_field_errors }}
+            </div>
+        {% endif %}
+
+        {% for field in form %}
+            <div class="form-group">
+                {{ field.label_tag }}
+                {{ field }}
+                {% if field.errors %}
+                    <div class="form-error">
+                        {{ field.errors }}
+                    </div>
+                {% endif %}
+            </div>
+        {% endfor %}
+        
+        <div class="form-buttons">
+            <button type="submit" class="button-primary">Login</button>
+        </div>
+    </form>
+    
+    <div style="margin-top: 30px; border-top: 1px solid rgba(255,255,255,0.3); padding-top: 20px;">
+        <p style="color: #ccc; font-size: 0.9em;">Nu ai încă un cont?</p>
+        <a href="{% url 'register' %}" class="button-secondary" style="background-color: #333;">Inregistreaza-te aici</a>
+    </div>
+
+{% endblock %}

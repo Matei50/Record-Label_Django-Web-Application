@@ -1,0 +1,44 @@
+{% extends "pgLang/baza.html" %}
+
+{% block title %}
+{{ artist.nume }}
+{% endblock %}
+
+{% block content %}
+    {% if artist.imagine %}
+        <img src="{{ artist.imagine.url }}" class="artist-detail-img">
+    {% endif %}
+    
+    <h1>{{ artist.nume }}</h1>
+    <p>{{ artist.bio|linebreaks }}</p>
+
+    <hr> 
+
+    <h2>Albume</h2>
+    {% if albume %}
+        <ul>
+            {% for album in albume %}
+                <li>
+                    <strong>
+                        <a href="{% url 'detaliu-album' album.id %}" style="color: #fff; text-decoration: none; border-bottom: 1px dotted #61dafb;">
+                        {{ album.titlu }}
+                        </a>
+                        (Lansat: {{ album.data_lansarii }})
+                    </strong>
+                    
+                    <ul style="margin-top: 5px;">
+                        {% for piesa in album.piese.all %}
+                            <li>{{ piesa.numar_piesa }}. {{ piesa.titlu }} - ({{ piesa.durata_formatata }})</li>
+                        {% empty %}
+                            <li>Inca nu au fost adaugate piese pentru acest album.</li>
+                        {% endfor %}
+                    </ul>
+                    </li>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <p>Acest artist nu are inca albume inregistrate.</p>
+    {% endif %}
+    
+    <a href="{% url 'lista-artisti' %}">Inapoi la toti artistii</a>
+{% endblock %}
